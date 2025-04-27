@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Submit Lead</title>
+</head>
+<body>
+  <h1>Lead Inquiry Form</h1>
+  <form id="leadForm">
+    <input type="text" id="name" placeholder="Name" required /><br/>
+    <input type="text" id="phone" placeholder="Phone Number" required /><br/>
+    <input type="email" id="email" placeholder="Email" required /><br/>
+    <input type="text" id="loanType" placeholder="Loan Type" required /><br/>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    document.getElementById('leadForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const email = document.getElementById('email').value;
+      const loanType = document.getElementById('loanType').value;
+
+      const response = await fetch('http://localhost:8000/leads', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, phone, email, loanType })
+      });
+
+      const data = await response.json();
+      alert(data.message);
+    });
+  </script>
+</body>
+</html>
